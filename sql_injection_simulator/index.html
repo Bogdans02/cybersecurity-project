@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>SQL Injection Symulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>SQL Injection Symulator</h1>
+
+    <div class="main-grid">
+        <!-- SQL Injection Examples -->
+        <div class="injection-examples card">
+            <h2>Przykłady ataków SQL Injection:</h2>
+            <ul>
+                <li class="injection-item" data-info="Omijanie logowania: Ten kod zmienia warunek w zapytaniu SQL tak, że zawsze jest prawdziwy (1=1). Dzięki temu można zalogować się bez podawania poprawnego hasła." data-field="username" data-inject="' OR 1=1 -- "> ' OR '1'='1' -- </li>
+                <li class="injection-item" data-info="Logowanie jako konkretny użytkownik: Zapytanie zwraca dane użytkownika o nazwie jan, omijając potrzebę znajomości hasła." data-field="username" data-inject="' OR username = 'jan' -- "> ' OR username = 'jan' -- </li>
+                <li class="injection-item" data-info="Zmiana hasła przez SQL Injection: Najpierw warunek 1=1 pozwala zalogować się bez przeszkód, a następnie wykonywane jest dodatkowe zapytanie, które zmienia hasło użytkownika jan na hacked123." data-field="username" data-inject="' OR 1=1; UPDATE users SET password='hacked123' WHERE username='jan'; -- "> ' OR 1=1; UPDATE users SET password='hacked123' WHERE username='jan'; -- </li>
+                <li class="injection-item" data-info="Dodanie nowego użytkownika: Ten kod dodaje do bazy nowego użytkownika hacker z hasłem 1234, umożliwiając logowanie się pod tym kontem bez uprawnień." data-field="username" data-inject="'; INSERT INTO users (username, password) VALUES ('hacker', '1234'); -- "> '; INSERT INTO users (username, password) VALUES ('hacker', '1234'); -- </li>
+            </ul>
+
+            <p>Kliknij przykład, aby zobaczyć, co robi.</p>
+            <div id="injectionInfo"></div>
+        </div>
+
+        <!-- Login Form -->
+        <div class="login-container card">
+            <form id="loginForm">
+                <input type="text" id="username" name="username" placeholder="Nazwa użytkownika" required>
+                <input type="password" id="password" name="password" placeholder="Hasło" required>
+                <button type="submit">Zaloguj</button>
+            </form>
+            <div id="loginResult"></div>
+        </div>
+
+        <!-- User Table -->
+        <div class="user-table card">
+            <h2>Aktualni użytkownicy w bazie danych:</h2>
+            <div id="userList">Ładowanie...</div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
