@@ -1,4 +1,4 @@
-SQL Injection Simulator
+DEMO SQL Injection Simulator
 
 Educational project demonstrating common SQL injection techniques
 and how they affect authentication systems.
